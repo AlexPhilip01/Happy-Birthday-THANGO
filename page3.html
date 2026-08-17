@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love You My Love 💛</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold-1: #fff2df;
+    --gold-2: #ffd8a8;
+    --gold-3: #ff9f68;
+    --umber-900: #6b3a14;
+    --rose-600: #e0245e;
+    --rose-800: #b3184a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    min-height: 100vh;
+    font-family: 'Quicksand', sans-serif;
+    background: radial-gradient(circle at 50% 18%, var(--gold-1), var(--gold-2) 55%, var(--gold-3) 100%);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .scene {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  #folderScene { z-index: 1; opacity: 1; }
+  #folderScene.hide { opacity: 0; transform: scale(.92); pointer-events: none; }
+  #videoScene {
+    z-index: 2;
+    opacity: 0;
+    transform: scale(.95);
+    pointer-events: none;
+  }
+  #videoScene.show { opacity: 1; transform: scale(1); pointer-events: all; }
+
+  .folder-wrap {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 10px;
+  }
+  .folder {
+    display: block;
+    position: relative;
+    width: 220px;
+    height: 150px;
+  }
+  .folder-wrap.opened .folder { animation: popBounce .5s ease; }
+  @keyframes popBounce {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  .folder-tab {
+    position: absolute;
+    top: -16px;
+    left: 18px;
+    width: 74px;
+    height: 24px;
+    background: #ffb463;
+    border-radius: 8px 10px 0 0;
+  }
+  .folder-back {
+    position: absolute;
+    inset: 0;
+    background: #ffb463;
+    border-radius: 4px 12px 12px 12px;
+    box-shadow: 0 22px 42px -10px rgba(120,60,10,.4);
+  }
+  .folder-front {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 68%;
+    background: #ffcf8f;
+    border-radius: 0 0 12px 12px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 12px;
+  }
+  .folder-heart {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 27px;
+  }
+  .folder-heart::before, .folder-heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 16px;
+    height: 24px;
+    border-radius: 16px 16px 0 0;
+    background: var(--rose-600);
+  }
+  .folder-heart::before { left: 15px; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .folder-heart::after  { left: 0;    transform: rotate(45deg);  transform-origin: 100% 100%; }
+
+  .folder-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.9rem;
+    color: var(--rose-800);
+  }
+  .folder-hint { color: var(--umber-900); opacity: .65; font-size: 13px; }
+
+  .burst-heart {
+    position: fixed;
+    width: 14px;
+    height: 13px;
+    transform: translate(-50%, -50%);
+    animation: burst .8s ease-out forwards;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .burst-heart::before, .burst-heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 80%;
+    border-radius: 50% 50% 0 0;
+    background: var(--rose-600);
+  }
+  .burst-heart::before { left: 50%; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .burst-heart::after  { left: 0;   transform: rotate(45deg);  transform-origin: 100% 100%; }
+  @keyframes burst {
+    0%   { transform: translate(-50%, -50%) translate(0, 0) scale(.6); opacity: 1; }
+    100% { transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(1); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .folder-wrap.opened .folder { animation: none; }
+    .burst-heart { display: none; }
+  }
+
+  .video-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px 18px 22px;
+    box-shadow: 0 30px 60px -15px rgba(120,60,10,.4);
+    width: 100%;
+    max-width: 460px;
+    text-align: center;
+  }
+  .video-card .monogram {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 14px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--rose-800);
+    background: var(--gold-1);
+    border: 1px solid var(--gold-2);
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+  .video-card video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+    background: #000;
+  }
+
+  @media (max-width: 380px) {
+    .folder { width: 190px; height: 130px; }
+    .folder-label { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+  <section class="scene" id="folderScene">
+    <button class="folder-wrap" id="folderWrap" aria-label="Open the folder">
+      <span class="folder">
+        <span class="folder-tab"></span>
+        <span class="folder-back"></span>
+        <span class="folder-front">
+          <span class="folder-heart"></span>
+        </span>
+      </span>
+      <span class="folder-label">love you my love</span>
+      <span class="folder-hint">Tap to open</span>
+    </button>
+  </section>
+
+  <section class="scene" id="videoScene">
+    <div class="video-card">
+      <span class="monogram">S &hearts; A</span>
+      <video controls playsinline preload="metadata" src="love.mp4"></video>
+    </div>
+  </section>
+
+<script>
+  const folderWrap = document.getElementById('folderWrap');
+  const folderScene = document.getElementById('folderScene');
+  const videoScene = document.getElementById('videoScene');
+
+  function burstHearts(originEl) {
+    const rect = originEl.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    for (let i = 0; i < 10; i++) {
+      const h = document.createElement('div');
+      h.className = 'burst-heart';
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 60 + Math.random() * 80;
+      h.style.left = cx + 'px';
+      h.style.top = cy + 'px';
+      h.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+      h.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+      document.body.appendChild(h);
+      setTimeout(function () { h.remove(); }, 900);
+    }
+  }
+
+  folderWrap.addEventListener('click', function () {
+    if (folderWrap.classList.contains('opened')) return;
+    folderWrap.classList.add('opened');
+    burstHearts(folderWrap);
+    setTimeout(function () {
+      folderScene.classList.add('hide');
+      videoScene.classList.add('show');
+    }, 650);
+  });
+</script>
+</body>
+</html>
