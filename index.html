@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Surprise Awaits 💕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush-50:  #fff3f7;
+    --blush-200: #ffd6e4;
+    --blush-400: #ff9dbb;
+    --rose-600:  #e0245e;
+    --rose-800:  #b3184a;
+    --plum-900:  #4a1330;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-family: 'Quicksand', sans-serif;
+    color: var(--plum-900);
+    background: radial-gradient(circle at 50% 20%, var(--blush-50), var(--blush-200) 45%, var(--blush-400) 100%);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  #hearts-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-heart {
+    position: absolute;
+    bottom: -10vh;
+    opacity: 0;
+    animation-name: floatUp;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  .bg-heart::before, .bg-heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 80%;
+    border-radius: 50% 50% 0 0;
+    background: inherit;
+  }
+  .bg-heart::before { left: 50%; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .bg-heart::after  { left: 0;   transform: rotate(45deg);  transform-origin: 100% 100%; }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    12%  { opacity: .8; }
+    88%  { opacity: .5; }
+    100% { transform: translateY(-115vh) translateX(24px) rotate(12deg); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bg-heart { animation: none; opacity: .25; }
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 380px;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 28px;
+    padding: 44px 32px 36px;
+    text-align: center;
+    box-shadow: 0 24px 48px -12px rgba(179,24,74,0.35);
+  }
+
+  .monogram {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--rose-800);
+    background: var(--blush-50);
+    border: 1px solid var(--blush-200);
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: 2.6rem;
+    line-height: 1.15;
+    color: var(--rose-800);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 13.5px;
+    opacity: .75;
+    margin-bottom: 30px;
+  }
+
+  .field { text-align: left; margin-bottom: 20px; }
+
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--rose-800);
+    margin-bottom: 6px;
+  }
+
+  .field input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 2px solid var(--blush-200);
+    background: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--plum-900);
+    outline: none;
+    transition: border-color .2s ease;
+  }
+  .field input:focus { border-color: var(--rose-600); }
+  .field input:focus-visible { outline: 2px solid var(--rose-600); outline-offset: 2px; }
+
+  .hint {
+    font-size: 11.5px;
+    font-style: italic;
+    opacity: .55;
+    margin-top: 5px;
+  }
+
+  .love-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 14px auto 6px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .love-btn:focus-visible { outline: 2px solid var(--rose-600); outline-offset: 4px; border-radius: 12px; }
+
+  .heart-shape {
+    position: relative;
+    width: 60px;
+    height: 54px;
+    transition: transform .18s ease;
+  }
+  .love-btn:hover .heart-shape { transform: scale(1.08); }
+  .love-btn:active .heart-shape { transform: scale(0.94); }
+  .heart-shape::before, .heart-shape::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 32px;
+    height: 48px;
+    border-radius: 32px 32px 0 0;
+    background: var(--rose-600);
+  }
+  .heart-shape::before { left: 30px; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .heart-shape::after  { left: 0;    transform: rotate(45deg);  transform-origin: 100% 100%; }
+
+  .love-btn .label {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--rose-800);
+  }
+
+  .error-msg {
+    min-height: 18px;
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--rose-600);
+  }
+
+  .shake { animation: shake .4s ease; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-7px); }
+    40%, 80% { transform: translateX(7px); }
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    background: radial-gradient(circle at 50% 45%, var(--blush-200), var(--blush-400));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s ease;
+  }
+  .overlay.show { opacity: 1; pointer-events: all; }
+  .overlay h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.4rem;
+    color: var(--rose-800);
+    margin-bottom: 10px;
+  }
+  .overlay p { font-size: 14px; opacity: .8; }
+
+  @media (max-width: 380px) {
+    .card { padding: 36px 22px 30px; }
+    h1 { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+  <div id="hearts-bg"></div>
+
+  <main class="card">
+    <span class="monogram">S &hearts; A</span>
+    <h1>A Surprise Awaits</h1>
+    <p class="subtitle">Enter your code to unlock it.</p>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" autocomplete="off">
+        <div class="hint">Hint: your first name + mine</div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="off">
+        <div class="hint">Hint: the day we met</div>
+      </div>
+
+      <button type="submit" class="love-btn">
+        <span class="heart-shape" aria-hidden="true"></span>
+        <span class="label">Click for Love</span>
+      </button>
+
+      <div class="error-msg" id="errorMsg" role="alert"></div>
+    </form>
+  </main>
+
+  <div class="overlay" id="overlay">
+    <h2>You're In</h2>
+    <p>Get ready for your surprise&hellip;</p>
+  </div>
+
+<script>
+  // Ambient floating hearts
+  const bg = document.getElementById('hearts-bg');
+  const palette = ['#e0245e', '#ff6f9c', '#ff9dbb', '#ffb6c9'];
+  const total = window.innerWidth < 480 ? 14 : 20;
+  for (let i = 0; i < total; i++) {
+    const h = document.createElement('div');
+    h.className = 'bg-heart';
+    const size = 12 + Math.random() * 20;
+    h.style.width = size + 'px';
+    h.style.height = size + 'px';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.background = palette[Math.floor(Math.random() * palette.length)];
+    h.style.animationDuration = (9 + Math.random() * 9) + 's';
+    h.style.animationDelay = (Math.random() * 12) + 's';
+    bg.appendChild(h);
+  }
+
+  // Login logic
+  const form = document.getElementById('loginForm');
+  const errorMsg = document.getElementById('errorMsg');
+  const card = document.querySelector('.card');
+  const overlay = document.getElementById('overlay');
+
+  const CORRECT_USER = 'santhiya alex';
+  const CORRECT_PASS = '10/12/2024';
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const u = document.getElementById('username').value.trim().toLowerCase();
+    const rawP = document.getElementById('password').value.trim();
+    const p = rawP.replace(/[-. ]/g, '/');
+
+    if (u === CORRECT_USER && p === CORRECT_PASS) {
+      errorMsg.textContent = '';
+      overlay.classList.add('show');
+      setTimeout(function () {
+        window.location.href = 'page2.html';
+      }, 2200);
+    } else {
+      errorMsg.textContent = 'Not quite — try again.';
+      card.classList.remove('shake');
+      void card.offsetWidth;
+      card.classList.add('shake');
+    }
+  });
+</script>
+</body>
+</html>
