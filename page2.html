@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night-1: #2c4090;
+    --night-2: #16224f;
+    --night-3: #0a1030;
+    --paper-50: #faf6ec;
+    --ink-900: #2a2550;
+    --rose-600: #e0245e;
+    --rose-800: #b3184a;
+    --flap: #f2ede2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    min-height: 100vh;
+    font-family: 'Quicksand', sans-serif;
+    background: radial-gradient(circle at 50% 15%, var(--night-1), var(--night-2) 60%, var(--night-3) 100%);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  #stars-bg { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+  .star { position: absolute; border-radius: 50%; background: #fff; animation: twinkle 3s ease-in-out infinite; }
+  @keyframes twinkle { 0%, 100% { opacity: .15; } 50% { opacity: .9; } }
+  @media (prefers-reduced-motion: reduce) { .star { animation: none; opacity: .45; } }
+
+  .scene {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  #envelopeScene { z-index: 1; opacity: 1; }
+  #envelopeScene.hide { opacity: 0; transform: scale(.92); pointer-events: none; }
+  #letterScene {
+    z-index: 2;
+    opacity: 0;
+    transform: scale(.95);
+    pointer-events: none;
+  }
+  #letterScene.show { opacity: 1; transform: scale(1); pointer-events: all; }
+
+  .envelope-column, .letter-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+  }
+
+  .envelope-wrap {
+    position: relative;
+    width: 280px;
+    margin: 0 auto;
+    perspective: 900px;
+  }
+  .envelope {
+    position: relative;
+    width: 280px;
+    height: 190px;
+    background: #ffffff;
+    border-radius: 4px 4px 10px 10px;
+    box-shadow: 0 25px 55px -10px rgba(5,10,40,.55);
+    z-index: 2;
+  }
+  .flap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 95px solid var(--flap);
+    transform-origin: 50% 0%;
+    transition: transform .7s ease, opacity .7s ease .1s;
+    z-index: 3;
+  }
+  .envelope-wrap.open .flap { transform: rotateX(180deg); opacity: 0; }
+
+  .heart-seal {
+    position: absolute;
+    left: 50%;
+    top: 95px;
+    transform: translate(-50%, -50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 4;
+    padding: 12px;
+    transition: opacity .4s ease, transform .4s ease;
+  }
+  .envelope-wrap.open .heart-seal { opacity: 0; transform: translate(-50%,-50%) scale(1.5); pointer-events: none; }
+
+  .heart-shape {
+    position: relative;
+    width: 46px;
+    height: 42px;
+    display: block;
+    animation: pulseSeal 1.8s ease-in-out infinite;
+  }
+  .heart-shape::before, .heart-shape::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 25px;
+    height: 37px;
+    border-radius: 25px 25px 0 0;
+    background: var(--rose-600);
+    box-shadow: 0 6px 14px -4px rgba(224,36,94,.7);
+  }
+  .heart-shape::before { left: 23px; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .heart-shape::after  { left: 0;    transform: rotate(45deg);  transform-origin: 100% 100%; }
+
+  @keyframes pulseSeal { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+  @media (prefers-reduced-motion: reduce) { .heart-shape { animation: none; } }
+
+  .tap-hint { color: #fff; opacity: .7; font-size: 13px; letter-spacing: .3px; }
+
+  .letter-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    max-height: 74vh;
+    overflow-y: auto;
+    background: var(--paper-50);
+    border-radius: 10px;
+    padding: 34px 26px 28px;
+    box-shadow: 0 30px 60px -15px rgba(0,0,20,.55);
+    transform: rotate(-.5deg);
+  }
+  .letter-card .monogram {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 20px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--rose-800);
+    background: #fff;
+    border: 1px solid #f0e6da;
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+  .letter-body p {
+    font-family: 'EB Garamond', serif;
+    font-size: 16.5px;
+    line-height: 1.75;
+    color: var(--ink-900);
+    margin-bottom: 16px;
+  }
+  .love-line {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.9rem;
+    text-align: center;
+    color: var(--rose-800);
+    margin: 18px 0;
+  }
+  .sign-off {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    text-align: right;
+    color: var(--ink-900);
+    opacity: .8;
+    margin-top: 10px;
+  }
+  .signature-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    text-align: right;
+    color: var(--rose-800);
+  }
+
+  .next-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rose-600);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    box-shadow: 0 12px 24px -8px rgba(224,36,94,.6);
+  }
+  .next-link .arrow { transition: transform .2s ease; display: inline-block; }
+  .next-link:hover .arrow { transform: translateX(5px); }
+  .next-link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  @media (max-width: 380px) {
+    .envelope-wrap, .envelope { width: 240px; }
+    .flap { border-left-width: 120px; border-right-width: 120px; border-top-width: 82px; }
+    .heart-seal { top: 82px; }
+    .letter-card { padding: 28px 20px 24px; max-height: 70vh; }
+    .love-line { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+  <div id="stars-bg"></div>
+
+  <section class="scene" id="envelopeScene">
+    <div class="envelope-column">
+      <div class="envelope-wrap" id="envelopeWrap">
+        <div class="envelope">
+          <div class="flap"></div>
+        </div>
+        <button class="heart-seal" id="heartSeal" aria-label="Open the letter">
+          <span class="heart-shape"></span>
+        </button>
+      </div>
+      <p class="tap-hint">Tap the heart to open</p>
+    </div>
+  </section>
+
+  <section class="scene" id="letterScene">
+    <div class="letter-column">
+      <article class="letter-card">
+        <span class="monogram">S &hearts; A</span>
+        <div class="letter-body">
+          <p>Happy 23rd birthday thangooooo 😘😘😘😘😘. I love you so much from the first day till now i have loved you with all my heart. When i met you I was so happy and when I was leaving to London i was so sad for like 10 months it's a real torture and frustration without seeing you for long.</p>
+          <p>Everyday and every night you were always in my heart. After 10 long months of waiting i saw you i suprised you, you are always my kutty baby . Last 11 months were magical and it feels like we were married to each other and living under the same roof waa something so special we have our difficulties i understand but we still choose to be together no matter what this is what makes us fall in love with each other for the rest of our lives.</p>
+          <p>Thank you for being with me everyday happens for a reason you happened for a reason. You are my blessing chello. Nee kavala padatha no matter what i will always hold your hand till the end of our lives. Epadio yen kita vanthu matikita 😂 epadi next 80 years kuppa kota poriyo ALL THE BEST.</p>
+          <p>Nee yena romba romba nala pathukara suma la sola kudathu romba nala wife ah iruka enaku namaloda night cuddles ona okanthu sapdrathu ona bike la porathu elamae im leaving my dream life with you. We gonna get married in next 2 years be ready!</p>
+        </div>
+        <p class="love-line">I LOVE YOU PATTU CHELLAM❤️</p>
+        <p class="sign-off">— With Love,</p>
+        <p class="signature-name">Alex philip</p>
+      </article>
+
+      <a href="page3.html" class="next-link" aria-label="Go to next page">
+        <span class="next-label">Next</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+<script>
+  // Twinkling night sky
+  const starsBg = document.getElementById('stars-bg');
+  const starCount = window.innerWidth < 480 ? 40 : 60;
+  for (let i = 0; i < starCount; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = 1 + Math.random() * 2.2;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.animationDuration = (2 + Math.random() * 3) + 's';
+    s.style.animationDelay = (Math.random() * 4) + 's';
+    starsBg.appendChild(s);
+  }
+
+  // Envelope open interaction
+  const envelopeWrap = document.getElementById('envelopeWrap');
+  const heartSeal = document.getElementById('heartSeal');
+  const envelopeScene = document.getElementById('envelopeScene');
+  const letterScene = document.getElementById('letterScene');
+
+  heartSeal.addEventListener('click', function () {
+    if (envelopeWrap.classList.contains('open')) return;
+    envelopeWrap.classList.add('open');
+    setTimeout(function () {
+      envelopeScene.classList.add('hide');
+      letterScene.classList.add('show');
+    }, 750);
+  });
+</script>
+</body>
+</html>
